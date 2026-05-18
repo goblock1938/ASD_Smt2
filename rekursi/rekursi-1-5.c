@@ -15,18 +15,26 @@ int main() {
     printf("Pilihan : ");
     scanf("%d", &choice);
 
-    printf("Nilai n : ");
-    scanf("%d", &n);
+    if (choice != 3) {
+      printf("Nilai n : ");
+      scanf("%d", &n);
 
-    printf("Nilai r : ");
-    scanf("%d", &r);
-
+      printf("Nilai r : ");
+      scanf("%d", &r);
+    }
+    if (n == 0 || r == 0 || n < r) {
+      printf("value tidak valid, n harus lebih besar dari r dan tidak boleh "
+             "'0' !!\n");
+      continue;
+    }
     switch (choice) {
     case 1:
-      muta(n, r);
+      printf("nilai permutasi dari %d! / (%d - %d)! adalah => %d\n", n, n, r,
+             muta(n, r));
       break;
     case 2:
-      comb(n, r);
+      printf("nilai kombinasi dari %d! / %d (%d - %d)! adalah => %d\n", n, r, n,
+             r, comb(n, r));
       break;
     case 3:
       break;
@@ -35,12 +43,11 @@ int main() {
       printf("INVALID CHOICE !!\n");
       break;
     }
-
-  } while (choice != 0);
+  } while (choice != 3);
 }
 
 int fact(int x) {
-  if (x == 1)
+  if (x <= 1)
     return 1;
 
   return x * fact(x - 1);
