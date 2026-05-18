@@ -18,7 +18,7 @@ Beberapa materi yang terdapat dalam repository ini antara lain:
 * Stack
 * Queue
 * Linked List
-* Tree
+* Tree (coming soon)
 * Operasi File
 * Dynamic Memory Allocation (`malloc`, `calloc`, `free`)
 * Studi Kasus dan Latihan Soal
@@ -79,24 +79,16 @@ Beberapa implementasi program yang tersedia:
 * Searching menggunakan Sequential dan Binary Search
 * Program rekursi faktorial, kombinasi, dan permutasi
 
+Untuk visualisasi algoritma yang lebih mudah difahami bisa menuju pada link berikut :
+
+[Visualgo](https://visualgo.net/en)
+
 ---
 
 ## ⚠️ Catatan
 
 * Sebagian program dibuat untuk kebutuhan praktikum dan pembelajaran.
 * Struktur kode mungkin berbeda antar folder karena mengikuti materi pertemuan.
-
----
-
-## 👨‍💻 Author
-
-Repository ini dibuat dan dikembangkan oleh:
-
-**GO-Block 1938**
-
-GitHub:
-
-[goblock1938 GitHub Repository](https://github.com/goblock1938/ASD_Smt2?utm_source=chatgpt.com)
 
 ---
 

@@ -33,8 +33,8 @@ int main() {
              muta(n, r));
       break;
     case 2:
-      printf("nilai kombinasi dari %d! / %d (%d - %d)! adalah => %d\n", n, r, n,
-             r, comb(n, r));
+      printf("nilai kombinasi dari %d! / %d! (%d - %d)! adalah => %d\n", n, r,
+             n, r, comb(n, r));
       break;
     case 3:
       break;
