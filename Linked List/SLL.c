@@ -230,10 +230,28 @@ void delq() {
   int key;
   printf("Masukkan key : ");
   scanf("%d", &key);
-  search = head;
 
-  while (search != NULL || search->data != key) {
-    ps = search;
-    search = search->next;
+  if (head->data == key)
+    delaw();
+
+  else if (tail->data == key)
+    delak();
+
+  else {
+    search = head;
+
+    while (search != NULL || search->data != key) {
+      ps = search;
+      search = search->next;
+    }
+
+    if (search == NULL) {
+      printf("KEY NOT FOUND !!!\n");
+      return;
+    }
+
+    ps->next = search->next;
+    free(search);
+    search = NULL;
   }
 }
