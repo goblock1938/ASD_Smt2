@@ -60,7 +60,7 @@ int main() {
   int a, b, n;
 
   do {
-    printf("\n=== MENU PROGRAM REKURSI & ITERASI ===\n");
+    printf("\nMENU PROGRAM REKURSI & ITERASI\n");
     printf("1. Cari FPB (Rekursi)\n");
     printf("2. Fibonacci Iterasi\n");
     printf("3. Fibonacci Rekursi\n");

@@ -6,7 +6,8 @@ typedef struct node {
   struct node *next;
 } Node;
 
-Node simpul, *new, *search, *head, *tail;
+Node simpul, *new = NULL, *search = NULL, *ps = NULL, *head = NULL,
+             *tail = NULL;
 
 void in();
 void del();
@@ -18,6 +19,7 @@ void inbef();
 void delaw();
 void delak();
 void delq();
+void tampil();
 
 int main() {
   int choice;
@@ -51,7 +53,7 @@ void alokasi() {
     printf("ALOCATION FAILED!!!\n");
     return;
   }
-  printf("Alokasi berhasil\n");
+  printf("Alokasi berhasil\n\n");
   int nilai;
   printf("masukkan data : ");
   scanf("%d", &nilai);
@@ -121,4 +123,117 @@ void del() {
       break;
     }
   } while (choice != 4);
+}
+
+void inaw() {
+  alokasi();
+
+  if (!new)
+    return;
+
+  if (head == NULL) {
+    head = new;
+    tail = new;
+  } else {
+    new->next = head;
+    head = new;
+  }
+}
+
+void inak() {
+  alokasi();
+
+  if (!new)
+    return;
+
+  if (head == NULL) {
+    head = new;
+    tail = new;
+  } else
+    tail->next = new;
+}
+
+void inaf() {
+  int key;
+  printf("Masukkan nilai key : ");
+  scanf("%d", &key);
+  search = head;
+
+  while (search != NULL || search->data == key)
+    search = search->next;
+
+  if (search == NULL) {
+    printf("KEY NOT FOUND !!!\n");
+    return;
+  }
+
+  alokasi();
+  if (!new)
+    return;
+
+  new->next = search->next;
+  search->next = new;
+}
+
+void inbef() {
+  int key;
+  printf("Masukkan nilai key : ");
+  scanf("%d", &key);
+  search = head;
+
+  while (search != NULL || search->data == key) {
+    ps = search;
+    search = search->next;
+  }
+  if (search == NULL) {
+    printf("KEY NOT FOUND !!!\n");
+    return;
+  }
+
+  alokasi();
+  if (!new)
+    return;
+
+  new->next = search;
+  ps->next = new;
+}
+
+void delaw() {
+  if (head == NULL) {
+    printf("SLL kosong!\n");
+    return;
+  }
+
+  search = head;
+  head = head->next;
+  free(search);
+  search = NULL;
+}
+void delak() {
+  if (head == NULL) {
+    printf("SLL kosong!\n");
+    return;
+  }
+
+  search = tail;
+  ps = head;
+
+  while (ps->next != tail)
+    ps = ps->next;
+
+  tail = ps;
+  free(search);
+  search = NULL;
+  ps = NULL;
+}
+void delq() {
+  int key;
+  printf("Masukkan key : ");
+  scanf("%d", &key);
+  search = head;
+
+  while (search != NULL || search->data != key) {
+    ps = search;
+    search = search->next;
+  }
 }
