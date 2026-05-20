@@ -44,6 +44,7 @@ int main() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
+    tampil();
   } while (choice != 3);
 }
 
@@ -92,7 +93,7 @@ void in() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice != 5);
+  } while (choice < 1 || choice > 5);
 }
 
 void del() {
@@ -108,13 +109,13 @@ void del() {
 
     switch (choice) {
     case 1:
-      inaw();
+      delaw();
       break;
     case 2:
-      inak();
+      delak();
       break;
     case 3:
-      inaf();
+      delq();
       break;
     case 4:
       break;
@@ -122,7 +123,7 @@ void del() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice != 4);
+  } while (choice > 4 || choice < 1);
 }
 
 void inaw() {
@@ -149,8 +150,10 @@ void inak() {
   if (head == NULL) {
     head = new;
     tail = new;
-  } else
+  } else {
     tail->next = new;
+    tail = new;
+  }
 }
 
 void inaf() {
@@ -159,7 +162,7 @@ void inaf() {
   scanf("%d", &key);
   search = head;
 
-  while (search != NULL || search->data == key)
+  while (search != NULL && search->data != key)
     search = search->next;
 
   if (search == NULL) {
@@ -167,10 +170,14 @@ void inaf() {
     return;
   }
 
+  if (tail->data == key) {
+    inak();
+    return;
+  }
+
   alokasi();
   if (!new)
     return;
-
   new->next = search->next;
   search->next = new;
 }
@@ -181,7 +188,7 @@ void inbef() {
   scanf("%d", &key);
   search = head;
 
-  while (search != NULL || search->data == key) {
+  while (search != NULL && search->data != key) {
     ps = search;
     search = search->next;
   }
@@ -209,6 +216,7 @@ void delaw() {
   free(search);
   search = NULL;
 }
+
 void delak() {
   if (head == NULL) {
     printf("SLL kosong!\n");
@@ -218,10 +226,17 @@ void delak() {
   search = tail;
   ps = head;
 
+  if (head == tail) {
+    free(head);
+    head = tail = NULL;
+    return;
+  }
+
   while (ps->next != tail)
     ps = ps->next;
 
   tail = ps;
+  tail->next = NULL;
   free(search);
   search = NULL;
   ps = NULL;
@@ -240,7 +255,7 @@ void delq() {
   else {
     search = head;
 
-    while (search != NULL || search->data != key) {
+    while (search != NULL && search->data != key) {
       ps = search;
       search = search->next;
     }
@@ -254,4 +269,14 @@ void delq() {
     free(search);
     search = NULL;
   }
+}
+
+void tampil() {
+  search = head;
+  printf("\nHEAD");
+  while (search != NULL) {
+    printf("->%d", search->data);
+    search = search->next;
+  }
+  printf("<-TAIL\n");
 }
