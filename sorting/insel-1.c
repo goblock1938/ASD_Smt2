@@ -12,6 +12,9 @@ int main() {
   int bak[MAKS] = {3, 10, 4, 6, 8, 9, 7, 2, 1, 5};
   do {
 
+    for (int i = 0; i <= 9; i++)
+      data[i] = bak[i];
+
     printf("Kondisi awal array : \n");
     tampil(data);
     printf("MENU METODE SORTING : \n");
