@@ -98,9 +98,6 @@ void selection(int arr[], int mode) {
     }
 
     tukar(&arr[i], &arr[min]);
-    // temp = arr[i];
-    // arr[i] = arr[min];
-    // arr[min] = temp;
   }
 }
 

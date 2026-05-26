@@ -65,15 +65,15 @@ void insertion(Data arr[], int n, int mode) {
   Data key;
   int j;
   for (int i = 1; i < n; i++) {
-    key = arr[i]; // Simpan seluruh struct
+    key = arr[i];
     j = i - 1;
 
-    if (mode == 2) { // Descending
+    if (mode == 2) {
       while (j >= 0 && arr[j].no < key.no) {
         arr[j + 1] = arr[j];
         j--;
       }
-    } else { // Ascending
+    } else {
       while (j >= 0 && arr[j].no > key.no) {
         arr[j + 1] = arr[j];
         j--;
@@ -87,7 +87,7 @@ void selection(Data arr[], int n, int mode) {
   int min;
   for (int i = 0; i < n - 1; i++) {
     min = i;
-    for (int j = i + 1; j < n; j++) { // Gunakan n, bukan MAKS[cite: 1]
+    for (int j = i + 1; j < n; j++) {
       if (mode == 2) {
         if (arr[j].no > arr[min].no)
           min = j;
@@ -96,7 +96,7 @@ void selection(Data arr[], int n, int mode) {
           min = j;
       }
     }
-    tukar(&arr[i], &arr[min]); // Tukar berdasarkan pointer[cite: 1]
+    tukar(&arr[i], &arr[min]);
   }
 }
 
