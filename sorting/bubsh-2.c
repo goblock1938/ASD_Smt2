@@ -1,20 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#define MAKS 20000
+#define MAKS 20
 
-void bubble(int[], int, int);
-void shell(int[], int, int);
-void tampil(int[]);
+typedef struct data {
+  int no;
+  char nama[MAKS];
+  int nilai;
+} Data;
+
+void bubble(Data[], int, int);
+void shell(Data[], int, int);
+void tampil(Data[]);
 void tukar(int *, int *);
-void generate(int[]);
-time_t t1, t2;
+int order();
 int comp, mv, sp;
 
 int main() {
   int choice_1, choice_2;
-  int data[MAKS];
-  generate(data);
+  Data data[MAKS];
+  Data bak[MAKS];
   do {
 
     mv = comp = sp = 0;
@@ -38,7 +42,6 @@ int main() {
       printf("INVALID CHOICE VALUE !!\n");
       continue;
     }
-    time(&t1);
     switch (choice_1) {
     case 1:
       bubble(data, 20000, choice_2);
@@ -50,8 +53,7 @@ int main() {
       printf("INVALID CHOICE METHODE !!\n");
       break;
     }
-    time(&t2);
-    printf("waktu komputasi : %f\n", difftime(t2, t1));
+    tampil(bak);
     printf("Total Compare : %d\n", comp);
     printf("Total Swap : %d\n", sp);
     printf("Total Movement : %d\n", mv);
@@ -59,7 +61,7 @@ int main() {
   } while (choice_1 != 3);
 }
 
-void bubble(int arr[], int n, int choice) {
+void bubble(Data arr[], int n, int choice) {
   int isSwap = 1, i = 0;
   while (i < MAKS && isSwap) {
     isSwap = 0;
@@ -83,7 +85,7 @@ void bubble(int arr[], int n, int choice) {
   }
 }
 
-void shell(int arr[], int n, int choice) {
+void shell(Data arr[], int n, int choice) {
   for (int gap = n / 2; gap > 0; gap /= 2) {
     for (int i = gap; i < n; i++) {
       int temp = arr[i];
@@ -114,16 +116,23 @@ void tukar(int *a, int *b) {
   *b = temp;
   sp++;
 }
-void generate(int arr[]) {
-  int n;
+
+void tampil(Data arr[]) {
+  int i;
+  printf("%-2s|%-20s|%-5s\n", "No", "Nama", "Nilai");
+  while (arr[i].nama[1] == '\0')
+    printf("%-2d|%-20s|%-5d\n", arr[i].no, arr[i].nama, arr[i].nilai);
+}
+
+int order() {
+  int choice;
   do {
-    printf("Mau generate berapa? (Maksimal : 20000)\n");
-    scanf("%d", &n);
-    if (n < 20000) {
-      for (int i = 0; i < n; i++)
-        arr[i] = rand() / 1000;
-    } else {
-      printf("Terlalu banyak data, silahkan input kembali\n");
-    }
-  } while (n > 20000);
+    printf("Pengurutan berdasarkan :\n");
+    printf("1. Nomor\n");
+    printf("2. Nama\n");
+    printf("3. Nilai\n");
+    if (choice < 1 && choice > 3)
+      printf("INVALID CHOICE!!!\n");
+  } while (choice < 1 && choice > 3);
+  return choice;
 }
