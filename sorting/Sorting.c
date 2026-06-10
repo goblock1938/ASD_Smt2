@@ -45,7 +45,7 @@ int main() {
     switch (choice) {
     case 0:
       break;
-      case 1:
+    case 1:
       selection(data, n, choice_2);
       break;
     case 2:
@@ -58,10 +58,10 @@ int main() {
       shell(data, n, choice_2);
       break;
     case 5:
-      merge(data, hasil, 0, n-1, choice_2);
+      merge(data, hasil, 0, n - 1, choice_2);
       break;
     case 6:
-      quick(data, 0, n-1, choice_2);
+      quick(data, 0, n - 1, choice_2);
       break;
     default:
       printf("INVALID CHOICE !!");
@@ -69,7 +69,8 @@ int main() {
     }
     end = clock();
     if (choice != 0)
-      printf("\nWaktu yang dibutuhkan: %f seconds\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+      printf("\nWaktu yang dibutuhkan: %f seconds\n",
+             ((double)(end - start)) / CLOCKS_PER_SEC);
 
     for (int i = 0; i < n; i++)
       data[i] = bak[i];
@@ -183,7 +184,7 @@ void shell(int arr[], int n, int mode) {
 }
 
 void merge(int arr[], int res[], int low, int high, int mode) {
-  if(low < high){
+  if (low < high) {
     int medium = (low + high) / 2;
     merge(arr, res, low, medium, mode);
     merge(arr, res, medium + 1, high, mode);
@@ -197,53 +198,53 @@ void merging(int arr[], int res[], int low, int medium, int high, int mode) {
   int R2 = high;
   int i = low;
 
-  while(L1 <= R1 && L2 <= R2) {
-    if (arr[L1] <= arr[L2]){
+  while (L1 <= R1 && L2 <= R2) {
+    if (arr[L1] <= arr[L2]) {
       res[i] = arr[L1];
       L1++;
-    }else{
+    } else {
       res[i] = arr[L2];
-      L2++; 
+      L2++;
     }
     i++;
   }
   while (L1 <= R1) {
-      res[i] = arr[L1];
-      L1++;
-      i++;
+    res[i] = arr[L1];
+    L1++;
+    i++;
   }
-  
+
   while (L2 <= R2) {
-      res[i] = arr[L2];
-      i++;
-      L2++;
+    res[i] = arr[L2];
+    i++;
+    L2++;
   }
-  
+
   int j = low;
-  
+
   while (j <= high) {
-      arr[j] = res[j];
-      j++;
+    arr[j] = res[j];
+    j++;
   }
 }
 void quick(int arr[], int low, int high, int mode) {
   if (low < high) {
-        int pi = partition(arr, low, high);
+    int pi = partition(arr, low, high);
 
-        quick(arr, low, pi - 1, mode);
-        quick(arr, pi + 1, high, mode);
-    }
+    quick(arr, low, pi - 1, mode);
+    quick(arr, pi + 1, high, mode);
+  }
 }
 int partition(int Data[], int low, int high) {
-    int pivot = Data[high];
-    int i = (low - 1);
+  int pivot = Data[high];
+  int i = (low - 1);
 
-    for (int j = low; j < high; j++) {
-        if (Data[j] <= pivot) {
-            i++; 
-            tukar(&Data[i], &Data[j]);
-        }
+  for (int j = low; j < high; j++) {
+    if (Data[j] <= pivot) {
+      i++;
+      tukar(&Data[i], &Data[j]);
     }
-    tukar(&Data[i + 1], &Data[high]);
-    return (i + 1);
+  }
+  tukar(&Data[i + 1], &Data[high]);
+  return (i + 1);
 }
