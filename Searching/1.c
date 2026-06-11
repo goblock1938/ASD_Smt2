@@ -10,7 +10,7 @@ void acak(int[], int);
 void tukar(int *, int *);
 
 int main() {
-  time_t start, end;
+  clock_t start, end;
   int arr[MAKS], n, arr1[MAKS], choice, comp;
   printf("Berapa data : ");
   scanf("%d", &n);
@@ -23,6 +23,7 @@ int main() {
   while (1) {
     printf("Searching Metode\n0. Exit\n1. Sequent tanpa Sorting\n2. Sequent "
            "dengan Sorting\n3. Binary\n");
+    printf("Pilihan : ");
     scanf("%d", &choice);
 
     if (choice == 0) {
@@ -32,22 +33,29 @@ int main() {
     start = clock();
     switch (choice) {
     case 1:
-      comp = sequent(arr1, n, rand() % n);
+      comp = sequent(arr1, n, (rand() % n) + 1);
       break;
     case 2:
-      comp = sequent(arr, n, rand() % n);
+      comp = sequent(arr, n, (rand() % n) + 1);
       break;
     case 3:
-      comp = binary(arr1, n, rand() % n);
+      comp = binary(arr, n, (rand() % n) + 1);
       break;
     }
-
     end = clock();
+    if (comp != -1) {
+      printf("Data Ditemukan\n");
+      printf("jumlah perbandingan : %d\n", comp);
+    } else
+      printf("Data tidak ditemukan \n");
+
+    printf("waktu yang dibutuhkan : %f Detik\n",
+           ((double)(end - start)) / CLOCKS_PER_SEC);
   };
 }
 
 int sequent(int arr[], int n, int key) {
-  int comp;
+  int comp = 0;
   for (int i = 0; i < n; i++) {
     comp++;
     if (arr[i] == key)
@@ -59,7 +67,7 @@ int sequent(int arr[], int n, int key) {
 int binary(int arr[], int n, int key) {
   int low = 0;
   int high = n - 1;
-  int comp;
+  int comp = 0;
   while (low <= high) {
     int mid = low + (high - low) / 2;
 
