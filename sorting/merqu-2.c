@@ -1,262 +1,242 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#define MAKS 100000
+#include <string.h>
 
-void insertion(int[], int);
-void selection(int[], int);
-void bubble(int[], int, int);
-void shell(int[], int, int);
-void merging(int[], int[], int, int, int, int);
-void quick(int[], int, int, int);
-void merge(int[], int[], int, int, int);
-int partition(int[], int, int, int);
-int generate(int[]);
-void tukar(int *, int *);
-time_t start, end;
+#define MAKS 20
+
+typedef struct mahasiswa {
+  int no, nilai;
+  char nama[MAKS];
+} mhs;
+
+// Prototipe Fungsi Utama (Lebih bersih dan parameter konsisten)
+void insertion(mhs[], int, int, int);
+void selection(mhs[], int, int, int);
+void bubble(mhs[], int, int, int);
+void shell(mhs[], int, int, int);
+void mergeSort(mhs[], mhs[], int, int, int, int);
+void merging(mhs[], mhs[], int, int, int, int, int);
+void quickSort(mhs[], int, int, int, int);
+int partition(mhs[], int, int, int, int);
+
+int bandingkan(mhs, mhs, int, int);
+void tukar(mhs *, mhs *);
+int inuser(mhs[]);
+void tampil(mhs[], int);
+int pilihKolom();
+
 int main() {
-  int choice, choice_2, bak[MAKS], hasil[MAKS], data[MAKS];
-  int n = generate(data);
+  int choice, choice_2, kolom, n;
+  mhs data[MAKS], hasil[MAKS], bak[MAKS];
+
+  n = inuser(data);
   for (int i = 0; i < n; i++)
     bak[i] = data[i];
 
   do {
-    printf("Sorting : \n");
-    printf("0. Exit\n");
-    printf("1. Selection Sort\n");
-    printf("2. Insertion Sort\n");
-    printf("3. Bubble Sort\n");
-    printf("4. Shell Sort\n");
-    printf("5. Merge Sort\n");
-    printf("6. Quick Sort\n");
-    printf("Pilihan : ");
+    printf("\nSorting Menu : \n");
+    printf("0. Exit\n1. Selection Sort\n2. Insertion Sort\n3. Bubble Sort\n4. "
+           "Shell Sort\n5. Merge Sort\n6. Quick Sort\nPilihan : ");
     scanf("%d", &choice);
 
-    if (choice > 0 && choice <= 6) {
-      printf("Pengurutan : \n");
-      printf("1. Ascending\n");
-      printf("2. Descending\n");
-      printf("Pilihan : ");
-      scanf("%d", &choice_2);
+    if (choice == 0)
+      break;
+    if (choice < 1 || choice > 6) {
+      printf("INVALID CHOICE !!\n");
+      continue;
     }
 
-    start = clock();
+    printf("Pengurutan : \n1. Ascending\n2. Descending\nPilihan : ");
+    scanf("%d", &choice_2);
+
+    kolom = pilihKolom();
+
     switch (choice) {
     case 1:
-      selection(data, choice_2);
+      selection(data, n, choice_2, kolom);
       break;
     case 2:
-      insertion(data, choice_2);
+      insertion(data, n, choice_2, kolom);
       break;
     case 3:
-      bubble(data, n, choice_2);
+      bubble(data, n, choice_2, kolom);
       break;
     case 4:
-      shell(data, n, choice_2);
+      shell(data, n, choice_2, kolom);
       break;
     case 5:
-      merge(data, hasil, 0, n-1, choice_2);
+      mergeSort(data, hasil, 0, n - 1, choice_2, kolom);
       break;
     case 6:
-      quick(data, 0, n-1, choice_2);
-      break;
-    default:
-      printf("INVALID CHOICE !!");
+      quickSort(data, 0, n - 1, choice_2, kolom);
       break;
     }
-    end = clock();
-    printf("Waktu yang dibutuhkan: %f seconds\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+
+    printf("\nHasil Setelah Sorting:\n");
+    tampil(data, n);
 
     for (int i = 0; i < n; i++)
       data[i] = bak[i];
   } while (choice != 0);
+
+  return 0;
 }
 
-int generate(int arr[]) {
-  int n;
-  printf("Berapa data (min = 30000, max = 100000): ");
-  scanf("%d", &n);
-  for (int i = 0; i < n; i++)
-    arr[i] = rand() / 1000;
-  return n;
+int bandingkan(mhs a, mhs b, int mode, int kolom) {
+  int hasil = 0;
+  if (kolom == 1)
+    hasil = (a.no > b.no) ? 1 : (a.no < b.no) ? -1 : 0;
+  else if (kolom == 2)
+    hasil = strcasecmp(a.nama, b.nama);
+  else
+    hasil = (a.nilai > b.nilai) ? 1 : (a.nilai < b.nilai) ? -1 : 0;
+
+  return (mode == 1) ? (hasil > 0) : (hasil < 0);
 }
 
-void tukar(int *a, int *b) {
-  int temp = *a;
+void tukar(mhs *a, mhs *b) {
+  mhs temp = *a;
   *a = *b;
   *b = temp;
 }
 
-void insertion(int arr[], int mode) {
-  int key, kondisi;
-  for (int i = 1; i < 10; i++) {
-
-    key = arr[i];
+void insertion(mhs arr[], int n, int mode, int kolom) {
+  for (int i = 1; i < n; i++) {
+    mhs key = arr[i];
     int j = i - 1;
-
-    if (mode == 2) {
-      while (j >= 0 && arr[j] < key) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
-    } else {
-      while (j >= 0 && arr[j] > key) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
+    while (j >= 0 && bandingkan(arr[j], key, mode, kolom)) {
+      arr[j + 1] = arr[j];
+      j--;
     }
-
     arr[j + 1] = key;
   }
 }
 
-void selection(int arr[], int mode) {
-  int min, temp;
-  for (int i = 0; i < MAKS; i++) {
-    min = i;
-    int j = i + 1;
-
-    if (mode == 2) {
-      while (j < MAKS) {
-        if (arr[j] > arr[min])
-          min = j;
-        j++;
-      }
-    } else {
-      while (j < MAKS) {
-        if (arr[j] < arr[min])
-          min = j;
-        j++;
+void selection(mhs arr[], int n, int mode, int kolom) {
+  for (int i = 0; i < n - 1; i++) {
+    int targetIdx = i;
+    for (int j = i + 1; j < n; j++) {
+      if (bandingkan(arr[targetIdx], arr[j], mode, kolom)) {
+        targetIdx = j;
       }
     }
-
-    tukar(&arr[i], &arr[min]);
+    tukar(&arr[i], &arr[targetIdx]);
   }
 }
 
-void bubble(int arr[], int n, int mode) {
+void bubble(mhs arr[], int n, int mode, int kolom) {
   int isSwap = 1, i = 0;
-  while (i < MAKS && isSwap) {
+  while (i < n - 1 && isSwap) {
     isSwap = 0;
     for (int j = 0; j < n - i - 1; j++) {
-      if (mode == 1) {
-        if (arr[j] > arr[j + 1]) {
-          tukar(&arr[j], &arr[j + 1]);
-          isSwap = 1;
-        }
-      } else {
-        if (arr[j] < arr[j + 1]) {
-          tukar(&arr[j], &arr[j + 1]);
-          isSwap = 1;
-        }
+      if (bandingkan(arr[j], arr[j + 1], mode, kolom)) {
+        tukar(&arr[j], &arr[j + 1]);
+        isSwap = 1;
       }
     }
-    if (!isSwap)
-      break;
     i++;
   }
 }
 
-void shell(int arr[], int n, int mode) {
+void shell(mhs arr[], int n, int mode, int kolom) {
   for (int gap = n / 2; gap > 0; gap /= 2) {
     for (int i = gap; i < n; i++) {
-      int temp = arr[i];
-      int j;
-
-      if (mode == 1) {
-        for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
-          arr[j] = arr[j - gap];
-        }
-      } else {
-        for (j = i; j >= gap && arr[j - gap] < temp; j -= gap) {
-          arr[j] = arr[j - gap];
-        }
+      mhs temp = arr[i];
+      int j = i;
+      while (j >= gap && bandingkan(arr[j - gap], temp, mode, kolom)) {
+        arr[j] = arr[j - gap];
+        j -= gap;
       }
       arr[j] = temp;
     }
   }
 }
 
-void merge(int arr[], int res[], int low, int high, int mode) {
-  if(low < high){
-    int medium = (low + high) / 2;
-    merge(arr, res, low, medium, mode);
-    merge(arr, res, medium + 1, high, mode);
-    merging(arr, res, low, medium, high, mode);
-  }
-}
-void merging(int arr[], int res[], int low, int medium, int high, int mode) {
-  int L1 = low;
-  int R1 = medium;
-  int L2 = medium + 1;
-  int R2 = high;
-  int i = low;
-
-  while(L1 <= R1 && L2 <= R2) {
-    if (mode == 1) {
-      if (arr[L1] <= arr[L2]){
-        res[i] = arr[L1];
-        L1++;
-      }else{
-        res[i] = arr[L2];
-        L2++; 
-      }
-    } else {
-      if (arr[L1] >= arr[L2]){
-        res[i] = arr[L1];
-        L1++;
-      }else{
-        res[i] = arr[L2];
-        L2++; 
-      }
-    }
-    i++;
-  }
-  while (L1 <= R1) {
-      res[i] = arr[L1];
-      L1++;
-      i++;
-  }
-  
-  while (L2 <= R2) {
-      res[i] = arr[L2];
-      i++;
-      L2++;
-  }
-  
-  int j = low;
-  
-  while (j <= high) {
-      arr[j] = res[j];
-      j++;
-  }
-}
-
-void quick(int arr[], int low, int high, int mode) {
+void mergeSort(mhs arr[], mhs res[], int low, int high, int mode, int kolom) {
   if (low < high) {
-        int pi = partition(arr, low, high, mode);
-
-        quick(arr, low, pi - 1, mode);
-        quick(arr, pi + 1, high, mode);
-    }
+    int medium = low + (high - low) / 2;
+    mergeSort(arr, res, low, medium, mode, kolom);
+    mergeSort(arr, res, medium + 1, high, mode, kolom);
+    merging(arr, res, low, medium, high, mode, kolom);
+  }
 }
-int partition(int Data[], int low, int high, int mode) {
-    int pivot = Data[high];
-    int i = (low - 1);
 
-    for (int j = low; j < high; j++) {
-        if (mode == 1) {
-          if (Data[j] <= pivot) {
-              i++; 
-              tukar(&Data[i], &Data[j]);
-          }
-        } else {
-          if (Data[j] >= pivot) {
-              i++; 
-              tukar(&Data[i], &Data[j]);
-          }
-        }
+void merging(mhs arr[], mhs res[], int low, int medium, int high, int mode,
+             int kolom) {
+  int L1 = low, R1 = medium, L2 = medium + 1, R2 = high, i = low;
+
+  while (L1 <= R1 && L2 <= R2) {
+    if (bandingkan(arr[L2], arr[L1], mode, kolom)) {
+      res[i++] = arr[L1++];
+    } else {
+      res[i++] = arr[L2++];
     }
-    tukar(&Data[i + 1], &Data[high]);
-    return (i + 1);
+  }
+  while (L1 <= R1)
+    res[i++] = arr[L1++];
+  while (L2 <= R2)
+    res[i++] = arr[L2++];
+  for (int j = low; j <= high; j++)
+    arr[j] = res[j];
+}
+
+void quickSort(mhs arr[], int low, int high, int mode, int kolom) {
+  if (low < high) {
+    int pi = partition(arr, low, high, mode, kolom);
+    quickSort(arr, low, pi - 1, mode, kolom);
+    quickSort(arr, pi + 1, high, mode, kolom);
+  }
+}
+
+int partition(mhs arr[], int low, int high, int mode, int kolom) {
+  mhs pivot = arr[high];
+  int i = low - 1;
+  for (int j = low; j < high; j++) {
+    if (bandingkan(pivot, arr[j], mode, kolom)) {
+      i++;
+      tukar(&arr[i], &arr[j]);
+    }
+  }
+  tukar(&arr[i + 1], &arr[high]);
+  return (i + 1);
+}
+
+int inuser(mhs arr[]) {
+  int i = 0;
+  char ch = 'y';
+  while ((ch == 'y' || ch == 'Y') && i < MAKS) {
+    printf("\nMasukkan nama siswa : ");
+    fgets(arr[i].nama, MAKS, stdin);
+    arr[i].nama[strcspn(arr[i].nama, "\n")] = '\0';
+
+    printf("Masukkan nilai siswa: ");
+    scanf("%d", &arr[i].nilai);
+    arr[i].no = i + 1;
+    i++;
+
+    printf("Input lagi? (y/n)   : ");
+    scanf(" %c", &ch);
+    getchar();
+  }
+  return i;
+}
+
+void tampil(mhs arr[], int n) {
+  printf("-----------------------------------------\n");
+  printf("%-4s %-20s %-5s\n", "No", "Nama", "Nilai");
+  printf("-----------------------------------------\n");
+  for (int i = 0; i < n; i++) {
+    printf("%-4d %-20s %-5d\n", arr[i].no, arr[i].nama, arr[i].nilai);
+  }
+  printf("-----------------------------------------\n");
+}
+
+int pilihKolom() {
+  int n;
+  do {
+    printf("\nUrutkan Berdasarkan Kolom:\n1. No\n2. Nama\n3. Nilai\nPilihan "
+           "Kolom : ");
+    scanf("%d", &n);
+  } while (n < 1 || n > 3);
+  return n;
 }
