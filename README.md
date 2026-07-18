@@ -10,18 +10,17 @@ Fokus utama repository ini adalah implementasi berbagai konsep struktur data dan
 
 Beberapa materi yang terdapat dalam repository ini antara lain:
 
-* Dasar-dasar Algoritma
-* Array dan Pointer
-* Function dan Rekursi
-* Searching Algorithm
-* Sorting Algorithm
-* Stack
-* Queue
-* Linked List
-* Tree (coming soon)
-* Operasi File
-* Dynamic Memory Allocation (`malloc`, `calloc`, `free`)
-* Studi Kasus dan Latihan Soal
+- Dasar-dasar Algoritma
+- Array dan Pointer
+- Function dan Rekursi
+- Searching Algorithm
+- Sorting Algorithm
+- Stack
+- Queue
+- Linked List
+- Operasi File
+- Dynamic Memory Allocation (`malloc`, `calloc`, `free`)
+- Studi Kasus dan Latihan Soal
 
 ---
 
@@ -29,10 +28,10 @@ Beberapa materi yang terdapat dalam repository ini antara lain:
 
 Repository ini menggunakan:
 
-* Bahasa C
-* GCC Compiler
-* Linux Environment / Terminal
-* Visual Studio Code
+- Bahasa C
+- GCC Compiler
+- Linux Environment / Terminal
+- IDE (VS code, nvim, nano, dll)
 
 ---
 
@@ -40,15 +39,12 @@ Repository ini menggunakan:
 
 ```bash
 ASD_Smt2/
-├── array/
 ├── linked-list/
 ├── queue/
 ├── stack/
 ├── rekursi/
 ├── sorting/
 ├── searching/
-├── tree/
-├── file-processing/
 └── README.md
 ```
 
@@ -60,11 +56,11 @@ ASD_Smt2/
 
 Repository ini dibuat untuk:
 
-* Dokumentasi proses belajar ASD Semester 2
-* Menyimpan source code praktikum dan latihan
-* Mempermudah revisi materi
-* Menjadi referensi pembelajaran struktur data menggunakan bahasa C
-* Membantu memahami logika algoritma secara bertahap
+- Dokumentasi proses belajar ASD Semester 2
+- Menyimpan source code praktikum dan latihan
+- Mempermudah revisi materi
+- Menjadi referensi pembelajaran struktur data menggunakan bahasa C
+- Membantu memahami logika algoritma secara bertahap
 
 ---
 
@@ -72,12 +68,12 @@ Repository ini dibuat untuk:
 
 Beberapa implementasi program yang tersedia:
 
-* Program pengecekan palindrom menggunakan stack
-* Implementasi queue menggunakan array
-* Operasi linked list (insert, delete, traversal)
-* Sorting data menggunakan Bubble Sort dan Selection Sort
-* Searching menggunakan Sequential dan Binary Search
-* Program rekursi faktorial, kombinasi, dan permutasi
+- Program pengecekan palindrom menggunakan stack
+- Implementasi queue menggunakan array
+- Operasi linked list (insert, delete, traversal)
+- Sorting data menggunakan Bubble Sort dan Selection Sort
+- Searching menggunakan Sequential dan Binary Search
+- Program rekursi faktorial, kombinasi, dan permutasi
 
 Untuk visualisasi algoritma yang lebih mudah difahami bisa menuju pada link berikut :
 
@@ -87,8 +83,8 @@ Untuk visualisasi algoritma yang lebih mudah difahami bisa menuju pada link beri
 
 ## ⚠️ Catatan
 
-* Sebagian program dibuat untuk kebutuhan praktikum dan pembelajaran.
-* Struktur kode mungkin berbeda antar folder karena mengikuti materi pertemuan.
+- Sebagian program dibuat untuk kebutuhan praktikum dan pembelajaran.
+- Struktur kode mungkin berbeda antar folder karena mengikuti materi pertemuan.
 
 ---
 
