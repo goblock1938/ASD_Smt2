@@ -44,22 +44,29 @@ int main() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-    tampil();
-  } while (choice != 3);
+
+    tampil(); // tampilkan isi DLL
+
+  } while (choice != 3); // break dan exit ketika pilih 3
 }
 
 void alokasi() {
+
+  // ambil memory kosong dengan menggunakan pointer
   new = (Node *)malloc(sizeof(Node));
+
+  // log alokasi
   if (!new) {
     printf("ALOCATION FAILED!!!\n");
     return;
   }
+
   printf("Alokasi berhasil\n\n");
   int nilai;
   printf("masukkan data : ");
   scanf("%d", &nilai);
-  new->data = nilai;
-  new->next = NULL;
+  new->data = nilai;            // memasukkan nilai ke memory nilai
+  new->next = new->prev = NULL; // set pointer ke null agar tidak terjadi error
 }
 
 void in() {
@@ -93,7 +100,8 @@ void in() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice < 1 || choice > 5);
+  } while (choice < 1 ||
+           choice > 5); // loop jika memilih selain dari range 1 - 5
 }
 
 void del() {
@@ -123,24 +131,32 @@ void del() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice > 4 || choice < 1);
+  } while (choice > 4 || choice < 1); // loop jika selain range 1 - 4
 }
 
 void inaw() {
+
+  // alokasi DLL baru
   alokasi();
 
   if (!new)
     return;
 
-  if (head == NULL) {
+  if (head == NULL) { // jika DLL belum memiliki isi (head tidak menunjuk)
+
+    // langsung tunjuk memory baru dengan head dan tail
     head = new;
     tail = new;
+
   } else {
+
+    // next memory baru menunjuk memory pertama dan point head di perbarui
     new->next = head;
     head = new;
   }
 }
 
+// mirip dengan insert awal
 void inak() {
   alokasi();
 
@@ -151,6 +167,8 @@ void inak() {
     head = new;
     tail = new;
   } else {
+
+    // next memory terakhir
     tail->next = new;
     tail = new;
   }
@@ -160,9 +178,11 @@ void inaf() {
   int key;
   printf("Masukkan nilai key : ");
   scanf("%d", &key);
+  // set pointer ke head
   search = head;
 
-  while (search != NULL && search->data != key)
+  while (search != NULL &&
+         search->data != key) // searching sampai DLL terakhir atau key
     search = search->next;
 
   if (search == NULL) {
@@ -170,6 +190,7 @@ void inaf() {
     return;
   }
 
+  // jika key berada di akhir maka kembali ke function insert akhir
   if (tail->data == key) {
     inak();
     return;
