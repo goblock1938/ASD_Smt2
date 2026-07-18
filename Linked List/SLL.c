@@ -14,11 +14,15 @@ void del();
 void alokasi();
 void inaw();
 void inak();
+// insert awal dan akhir overall algonya sama
 void inaf();
 void inbef();
+// insert before dan after overall algonya sama
 void delaw();
 void delak();
+// delete awal dan akhir overall algonya sama
 void delq();
+// delete by key dan insert after before overall algonya sama
 void tampil();
 
 int main() {
@@ -49,12 +53,16 @@ int main() {
 }
 
 void alokasi() {
+
+  // alokasi memory baru dengan pointer
   new = (Node *)malloc(sizeof(Node));
+
   if (!new) {
     printf("ALOCATION FAILED!!!\n");
     return;
   }
-  printf("Alokasi berhasil\n\n");
+
+  printf("Alokasi berhasil\n\n"); // log alokasi
   int nilai;
   printf("masukkan data : ");
   scanf("%d", &nilai);
@@ -132,12 +140,12 @@ void inaw() {
   if (!new)
     return;
 
-  if (head == NULL) {
-    head = new;
-    tail = new;
-  } else {
+  if (head == NULL)
+    head = tail = new; // head & tail point ke memory pertama
+  else {
+    // next memory baru menunjuk head
     new->next = head;
-    head = new;
+    head = new; // update point head
   }
 }
 
@@ -147,10 +155,9 @@ void inak() {
   if (!new)
     return;
 
-  if (head == NULL) {
-    head = new;
-    tail = new;
-  } else {
+  if (head == NULL)
+    head = tail = new;
+  else {
     tail->next = new;
     tail = new;
   }
