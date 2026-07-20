@@ -6,25 +6,28 @@ typedef struct node {
   struct node *next, *prev;
 } Node;
 
-Node simpul, *new = NULL, *search = NULL, *ps = NULL, *head = NULL,
-             *tail = NULL;
+Node simpul, *new = NULL, *search = NULL, *head = NULL, *tail = NULL;
 
 void in();
 void del();
 void alokasi();
 void inaw();
 void inak();
+// insert awal dan akhir overall algonya sama
 void inaf();
 void inbef();
+// insert before dan after overall algonya sama
 void delaw();
 void delak();
+// delete awal dan akhir overall algonya sama
 void delq();
+// delete by key dan insert after before overall algonya sama
 void tampil();
 
 int main() {
   int choice;
   do {
-    printf("\nMENU DLL : \n");
+    printf("\nMENU SLL : \n");
     printf("1. Insert\n");
     printf("2. Delete\n");
     printf("3. Exit\n");
@@ -44,29 +47,26 @@ int main() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-
-    tampil(); // tampilkan isi DLL
-
-  } while (choice != 3); // break dan exit ketika pilih 3
+    tampil();
+  } while (choice != 3);
 }
 
 void alokasi() {
 
-  // ambil memory kosong dengan menggunakan pointer
+  // alokasi memory baru dengan pointer
   new = (Node *)malloc(sizeof(Node));
 
-  // log alokasi
   if (!new) {
     printf("ALOCATION FAILED!!!\n");
     return;
   }
 
-  printf("Alokasi berhasil\n\n");
+  printf("Alokasi berhasil\n\n"); // log alokasi
   int nilai;
   printf("masukkan data : ");
   scanf("%d", &nilai);
-  new->data = nilai;            // memasukkan nilai ke memory nilai
-  new->next = new->prev = NULL; // set pointer ke null agar tidak terjadi error
+  new->data = nilai;
+  new->next = new->prev = NULL;
 }
 
 void in() {
@@ -100,8 +100,7 @@ void in() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice < 1 ||
-           choice > 5); // loop jika memilih selain dari range 1 - 5
+  } while (choice < 1 || choice > 5);
 }
 
 void del() {
@@ -131,44 +130,40 @@ void del() {
       printf("INVALID CHOICE!!!\n");
       break;
     }
-  } while (choice > 4 || choice < 1); // loop jika selain range 1 - 4
+  } while (choice > 4 || choice < 1);
 }
 
 void inaw() {
-
-  // alokasi DLL baru
   alokasi();
 
   if (!new)
     return;
 
-  if (head == NULL) { // jika DLL belum memiliki isi (head tidak menunjuk)
+  if (head == NULL)
+    head = tail = new; // head & tail point ke memory pertama
+  else {
+    // memory awal menunjuk ke memory baru
+    head->prev = new;
 
-    // langsung tunjuk memory baru dengan head dan tail
-    head = new;
-    tail = new;
-
-  } else {
-
-    // next memory baru menunjuk memory pertama dan point head di perbarui
+    // next memory baru menunjuk head
     new->next = head;
-    head = new;
+    head = new; // update point head
   }
 }
 
-// mirip dengan insert awal
 void inak() {
   alokasi();
 
   if (!new)
     return;
 
-  if (head == NULL) {
-    head = new;
-    tail = new;
-  } else {
+  if (head == NULL)
+    head = tail = new;
+  else {
+    // prev memory baru menunjuk memory terakhir
+    new->prev = tail;
 
-    // next memory terakhir
+    // next yang ditunjuk oleh tail menunjuk memory baru
     tail->next = new;
     tail = new;
   }
@@ -178,11 +173,11 @@ void inaf() {
   int key;
   printf("Masukkan nilai key : ");
   scanf("%d", &key);
-  // set pointer ke head
   search = head;
 
-  while (search != NULL &&
-         search->data != key) // searching sampai DLL terakhir atau key
+  /* searching key dan akan berhenti jika sudah ketemu
+  atau mencapai memory terakhir */
+  while (search != NULL && search->data != key)
     search = search->next;
 
   if (search == NULL) {
@@ -190,7 +185,6 @@ void inaf() {
     return;
   }
 
-  // jika key berada di akhir maka kembali ke function insert akhir
   if (tail->data == key) {
     inak();
     return;
@@ -199,8 +193,12 @@ void inaf() {
   alokasi();
   if (!new)
     return;
+
+  new->prev = search;
   new->next = search->next;
-  search->next = new;
+  new->prev->next = new;
+  new->next->prev = new;
+  search = NULL;
 }
 
 void inbef() {
@@ -209,12 +207,16 @@ void inbef() {
   scanf("%d", &key);
   search = head;
 
-  while (search != NULL && search->data != key) {
-    ps = search;
+  while (search != NULL && search->data != key)
     search = search->next;
-  }
+
   if (search == NULL) {
     printf("KEY NOT FOUND !!!\n");
+    return;
+  }
+
+  if (head->data == key) {
+    inaw();
     return;
   }
 
@@ -223,7 +225,10 @@ void inbef() {
     return;
 
   new->next = search;
-  ps->next = new;
+  new->prev = search->prev;
+  new->prev->next = new;
+  new->next->prev = new;
+  search = NULL;
 }
 
 void delaw() {
@@ -234,8 +239,14 @@ void delaw() {
 
   search = head;
   head = head->next;
+
+  // set pointer prev ke NULL agar memory yang dihapus hilang sepenuhnya
+  if (head != NULL)
+    head->prev = NULL;
+  else
+    tail = NULL;
   free(search);
-  search = NULL;
+  search = NULL; // search pointer kembali ke deafult valuenya
 }
 
 void delak() {
@@ -244,23 +255,21 @@ void delak() {
     return;
   }
 
-  search = tail;
-  ps = head;
-
-  if (head == tail) {
+  if (head == tail) { // jika memory yang tersisa hanya 1
     free(head);
     head = tail = NULL;
     return;
   }
 
-  while (ps->next != tail)
-    ps = ps->next;
+  search = tail;
 
-  tail = ps;
+  // pindahkan tail kesebelumnya dan buat next nya NULL
+  tail = tail->prev;
   tail->next = NULL;
+
+  // hapus isi pointer dan NULL
   free(search);
   search = NULL;
-  ps = NULL;
 }
 void delq() {
   int key;
@@ -276,17 +285,16 @@ void delq() {
   else {
     search = head;
 
-    while (search != NULL && search->data != key) {
-      ps = search;
+    while (search != NULL && search->data != key)
       search = search->next;
-    }
 
     if (search == NULL) {
       printf("KEY NOT FOUND !!!\n");
       return;
     }
 
-    ps->next = search->next;
+    search->next->prev = search->prev;
+    search->prev->next = search->next;
     free(search);
     search = NULL;
   }
@@ -294,9 +302,11 @@ void delq() {
 
 void tampil() {
   search = head;
-  printf("\nHEAD");
+  printf("\nHEAD->");
   while (search != NULL) {
-    printf("->%d", search->data);
+    printf("%d", search->data);
+    if (head != tail && search != tail)
+      printf("<->");
     search = search->next;
   }
   printf("<-TAIL\n");
