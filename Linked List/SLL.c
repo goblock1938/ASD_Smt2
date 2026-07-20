@@ -158,6 +158,7 @@ void inak() {
   if (head == NULL)
     head = tail = new;
   else {
+    // next yang ditunjuk oleh tail menunjuk memory baru
     tail->next = new;
     tail = new;
   }
@@ -169,6 +170,8 @@ void inaf() {
   scanf("%d", &key);
   search = head;
 
+  /* searching key dan akan berhenti jika sudah ketemu
+  atau mencapai memory terakhir */
   while (search != NULL && search->data != key)
     search = search->next;
 
@@ -204,6 +207,11 @@ void inbef() {
     return;
   }
 
+  if (head->data == key) {
+    inaw();
+    return;
+  }
+
   alokasi();
   if (!new)
     return;
@@ -221,7 +229,7 @@ void delaw() {
   search = head;
   head = head->next;
   free(search);
-  search = NULL;
+  search = NULL; // search pointer kembali ke deafult valuenya
 }
 
 void delak() {
@@ -230,20 +238,23 @@ void delak() {
     return;
   }
 
-  search = tail;
-  ps = head;
-
-  if (head == tail) {
+  if (head == tail) { // jika memory yang tersisa hanya 1
     free(head);
     head = tail = NULL;
     return;
   }
 
-  while (ps->next != tail)
+  search = tail;
+  ps = head;
+
+  while (ps->next != tail) // mencari posisi memory sebelum tail (sebelum akhir)
     ps = ps->next;
 
+  // pindahkan tail kesebelumnya dan buat next nya NULL
   tail = ps;
   tail->next = NULL;
+
+  // hapus isi pointer dan NULL
   free(search);
   search = NULL;
   ps = NULL;
@@ -262,6 +273,8 @@ void delq() {
   else {
     search = head;
 
+    /* delete by key memakai 2 pointer dikarenakan tidak ada yang menunjuk
+    memory sebelum yang ditunjuk search */
     while (search != NULL && search->data != key) {
       ps = search;
       search = search->next;
