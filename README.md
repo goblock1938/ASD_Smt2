@@ -11,16 +11,16 @@ Fokus utama repository ini adalah implementasi berbagai konsep struktur data dan
 Beberapa materi yang terdapat dalam repository ini antara lain:
 
 - Dasar-dasar Algoritma
-- Array dan Pointer
-- Function dan Rekursi
+- Array dan Pointer (coming soon)
+- Rekursi
 - Searching Algorithm
 - Sorting Algorithm
 - Stack
 - Queue
 - Linked List
-- Operasi File
-- Dynamic Memory Allocation (`malloc`, `calloc`, `free`)
-- Studi Kasus dan Latihan Soal
+- Operasi File (comming soon)
+- Dynamic Memory Allocation (`malloc`, `calloc`, `free`) (coming soon)
+- Studi Kasus dan Latihan Soal (coming soon)
 
 ---
 
@@ -45,6 +45,8 @@ ASD_Smt2/
 ├── rekursi/
 ├── sorting/
 ├── searching/
+├── tree/ (comming soon)
+├── graph/ (comming soon)
 └── README.md
 ```
 
