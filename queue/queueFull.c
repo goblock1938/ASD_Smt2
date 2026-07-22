@@ -11,7 +11,7 @@ void enqueue(queue *);
 void dequeue(queue *);
 void init(queue *);
 void tampil(queue *);
-void mm(queue *);
+void minMax(queue *);
 void search(queue *);
 int isNull(queue *);
 int isFull(queue *);
@@ -43,7 +43,7 @@ int main() {
       break;
 
     case 3:
-      mm(&antri);
+      minMax(&antri);
       break;
 
     case 4:
@@ -100,7 +100,7 @@ void tampil(queue *q) {
   }
 }
 
-void mm(queue *q) {
+void minMax(queue *q) {
   int min = 0, max = 0;
   for (int i = 0; i <= q->count - 1; i++) {
     int index = (q->front + i) % MAX;

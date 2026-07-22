@@ -14,6 +14,8 @@ void enqueue();
 void dequeue();
 void tampil();
 int isNull();
+// isFull tidak ada karena linked list memiliki kapasitas hampir tak terbatas
+// (kecuali jika ram user sudah penuh)
 
 int main() {
   int choice;

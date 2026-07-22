@@ -7,9 +7,9 @@ typedef struct {
   int front, rear, count;
 } queue;
 
-void enqueue(queue *);
-void dequeue(queue *);
-void init(queue *);
+void enqueue(queue *); // memasukkan data queue
+void dequeue(queue *); // mengeluarkan data queue
+void init(queue *);    // init atau state awal circular queue
 void tampil(queue *);
 int isNull(queue *);
 int isFull(queue *);
@@ -21,7 +21,7 @@ int main() {
 
   do {
 
-    printf("\n=== MENU QUEUE using ARRAY ===\n");
+    printf("\n=== MENU QUEUE using ARRAY (circular queue) ===\n");
     printf("1. ENQUEUE (Insert)\n");
     printf("2. DEQUEUE (delete)\n");
     printf("3. TAMPIL -> FIFO\n");
@@ -61,14 +61,13 @@ void enqueue(queue *x) {
   scanf("%d", &data);
   if (!isFull(x))
     x->data[x->rear++] = data;
-  x->rear %= MAX;
+  x->rear %= MAX; // update rear
 }
 
 void dequeue(queue *x) {
   if (isNull(x))
     x->data[x->front++] = 0;
-  if (x->front == 5)
-    x->front = 0;
+  x->front %= MAX; // update front
 }
 
 void tampil(queue *x) {
