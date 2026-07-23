@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// queue priority perbedaan terletak pada
+// enqueue yang lebih rumit dari yang biasanya
+
 typedef int item;
 typedef struct node {
   item data;
@@ -70,14 +73,18 @@ void enqueue() {
   p->priority = prio;
   p->next = NULL;
 
-  // perlu diganti
   if (isNull())
     front = rear = p;
   else if (front->priority > prio) {
+    // jika priority terbaru lebih kecil (yang paling darurat)
     p->next = front;
     front = p;
+
   } else {
+
+    // jika priority terbaru lebih besar (tidak darurat)
     search = front;
+    // mencari sampai prioritas yang lebih besar atau antrian terakhir
     while (search->next != NULL && search->next->priority <= prio)
       search = search->next;
 
@@ -87,8 +94,7 @@ void enqueue() {
     if (p->next == NULL)
       rear = p;
   }
-  // sampai sini
-  count++;
+  count++; // update jumlah antrian
 }
 
 void dequeue() {
