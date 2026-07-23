@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Soal 1 : Buatlah sebuah program yang menulis angka dari n ke 0 dengan
+            menggunakan proses rekursi.
+   Soal 2 : Tulis sebuah program untuk menulis angka
+            dari 0 ke n dengan menggunakan proses rekursi.
+   Soal 3 : Tuliskan program dengan rekursi untuk membalik suatu kalimat.
+            Sebagai contoh, kalimat 'ALGORITMA' dibalik menjadi 'AMTIROGLA'.
+            Jadikan panjang kalimat sebagai parameter fungsi rekursi */
 void soal1(int);
 void soal2(int);
 void soal3(char[], int);
@@ -29,7 +36,7 @@ int main() {
   case 3:
     printf("masukkan kata : ");
     fgets(ch, 64, stdin);
-    ch[strcspn(ch, "\n")] = '\0';
+    ch[strcspn(ch, "\n")] = '\0'; // menghapus endline ('\n')
     printf("hasil : ");
     soal3(ch, strlen(ch));
     break;
@@ -52,11 +59,11 @@ void soal2(int x) {
   soal2(x - 1);
 }
 
-void soal3(char temp[], int x) {
-  if (x < 0) {
+void soal3(char temp[], int len) {
+  if (len < 0) {
     printf("\n");
     exit(0);
   }
-  printf("%c", temp[x--]);
-  soal3(temp, x);
+  printf("%c", temp[len--]);
+  soal3(temp, len);
 }
