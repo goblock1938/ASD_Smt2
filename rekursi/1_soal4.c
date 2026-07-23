@@ -1,5 +1,13 @@
 #include <stdio.h>
 
+/* Soal :
+    a. Buatlah program menghitung faktorial dalam bentuk iterasi
+    b. Buatlah program menghitung faktorial dalam bentuk rekursi
+    c. Buatlah program menghitung faktorial dalam bentuk rekursi tail
+    d. Buatlah menu untuk menampilkan pilihan faktorial menggunakan : iterasi,
+    rekursi & rekursi tail. Setelah itu bandingkan waktu komputasi masing-masing
+    untuk menghitung faktorial untuk n yang cukup besar */
+
 int iteration(int);
 int rekursi(int);
 int tail(int, int);

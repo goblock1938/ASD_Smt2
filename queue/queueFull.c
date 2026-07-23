@@ -72,24 +72,27 @@ void enqueue(queue *q) {
   if (!isFull(q)) {
     printf("masukkan nilai data (int) : ");
     scanf("%d", &data);
+
+    // data dimasukkan kedalam rear dan rear akan di perbarui nilainya
     q->data[q->rear++] = data;
     q->count++;
+    q->rear %= MAX;
   } else {
     printf("QUEUE IS FULL\n");
   }
-  if (q->rear == 5)
-    q->rear = 0;
 }
 
 void dequeue(queue *q) {
   if (!isNull(q)) {
+
+    // data front dihapus dan front akan di perbarui nilainya
     q->data[q->front++] = 0;
     q->count--;
+    q->front %= MAX;
+
   } else {
     printf("QUEUE IS EMPTY\n");
   }
-  if (q->front == 5)
-    q->front = 0;
 }
 
 void tampil(queue *q) {
@@ -105,8 +108,11 @@ void minMax(queue *q) {
   for (int i = 0; i <= q->count - 1; i++) {
     int index = (q->front + i) % MAX;
     if (!i)
+      // min dan max inisiasi nilai awal dengan front jika i bernilai 0
       min = max = q->data[q->front];
+
     else {
+      // min dan max diperbarui dengan operasi ternary
       max = max < q->data[index] ? q->data[index] : max;
       min = min > q->data[index] ? q->data[index] : min;
     }
@@ -116,19 +122,19 @@ void minMax(queue *q) {
 
 void search(queue *q) {
   item s;
-  int isFound = 0;
   printf("masukkan data yang mau dicari : ");
   scanf("%d", &s);
+
   for (int i = 0; i < q->count; i++) {
     int index = (q->front + i) % MAX;
     if (s == q->data[i]) {
+
       printf("data telah ditemukan !\n data terletak di urutan nomor %d\n",
              index);
-      isFound = 1;
+      return; // akan langsung return jika sudah ketemu
     }
   }
-  if (!isFound)
-    printf("data tidak ditemukan\n");
+  printf("data tidak ditemukan\n");
 }
 
 int isFull(queue *q) { return q->count == MAX; }
