@@ -5,8 +5,8 @@
     b. Buatlah program menghitung faktorial dalam bentuk rekursi
     c. Buatlah program menghitung faktorial dalam bentuk rekursi tail
     d. Buatlah menu untuk menampilkan pilihan faktorial menggunakan : iterasi,
-    rekursi & rekursi tail. Setelah itu bandingkan waktu komputasi masing-masing
-    untuk menghitung faktorial untuk n yang cukup besar */
+       rekursi & rekursi tail. Setelah itu bandingkan waktu komputasi
+       masing-masing untuk menghitung faktorial untuk n yang cukup besar */
 
 int iteration(int);
 int rekursi(int);
@@ -47,9 +47,9 @@ int iteration(int n) {
 
   int temp = 1;
 
-  while (n != 1) {
+  while (n != 1)
     temp *= n--;
-  }
+  // mengubah nilai temp sekaligus mengurangi nilai n
 
   return temp;
 }
@@ -58,11 +58,14 @@ int rekursi(int n) {
   if (n == 1)
     return 1;
 
+  // return sebuah operasi untuk rekursi biasa
   return n * rekursi(n - 1);
 }
 
 int tail(int n, int hasil) {
   if (n == 0 || n == 1)
     return hasil;
+
+  // return diri sendiri agar tidak ada fase balik ketika sudah selesai
   return tail(n - 1, hasil * n);
 }

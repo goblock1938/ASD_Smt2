@@ -1,59 +1,10 @@
-#include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int fpb(int a, int b) {
-  if (b == 0)
-    return a;
-  return fpb(b, a % b);
-}
-
-void fibonacciIterasi(int n) {
-  int a = 0, b = 1, c;
-
-  printf("Deret Fibonacci (Iterasi): ");
-
-  for (int i = 1; i <= n; i++) {
-    printf("%d ", a);
-
-    c = a + b;
-    a = b;
-    b = c;
-  }
-
-  printf("\n");
-}
-
-int fibonacciRekursi(int n) {
-  if (n == 0)
-    return 0;
-  else if (n == 1)
-    return 1;
-
-  return fibonacciRekursi(n - 1) + fibonacciRekursi(n - 2);
-}
-
-void tampilFibonacciRekursi(int n) {
-  printf("Deret Fibonacci (Rekursi): ");
-
-  for (int i = 0; i < n; i++) {
-    printf("%d ", fibonacciRekursi(i));
-  }
-
-  printf("\n");
-}
-
-int cekPrimaRekursi(int n, int i) {
-  if (n <= 2)
-    return (n == 2);
-
-  if (n % i == 0)
-    return 0;
-
-  if (i > sqrt(n))
-    return 1;
-
-  return cekPrimaRekursi(n, i + 1);
-}
+int fpb(int, int);
+void fibonacciIterasi(int);
+void tampilFibonacciRekursi(int);
+int cekPrimaRekursi(int, int);
 
 int main() {
   int pilihan;
@@ -117,4 +68,70 @@ int main() {
   } while (pilihan != 5);
 
   return 0;
+}
+
+int fpb(int a, int b) {
+  a = abs(a);
+  b = abs(b);
+
+  if (b == 0)
+    return a;
+  return fpb(b, a % b);
+}
+
+void fibonacciIterasi(int n) {
+  if (n <= 0) {
+    printf("jumlah deret harus lebih dari 0\n");
+    return;
+  }
+  int a = 0, b = 1, c;
+
+  printf("Deret Fibonacci (Iterasi): ");
+
+  for (int i = 1; i <= n; i++) {
+    printf("%d ", a);
+
+    c = a + b;
+    a = b;
+    b = c;
+  }
+
+  printf("\n");
+}
+
+int fibonacciRekursi(int n) {
+  if (n <= 0)
+    return 0;
+  if (n == 1)
+    return 1;
+
+  return fibonacciRekursi(n - 1) + fibonacciRekursi(n - 2);
+}
+
+void tampilFibonacciRekursi(int n) {
+  if (n <= 0) {
+    printf("jumlah deret harus lebih dari 0\n");
+    return;
+  }
+
+  printf("Deret Fibonacci (Rekursi): ");
+
+  for (int i = 0; i < n; i++) {
+    printf("%d ", fibonacciRekursi(i));
+  }
+
+  printf("\n");
+}
+
+int cekPrimaRekursi(int n, int i) {
+  if (n <= 1)
+    return 0; // 0, 1, dan bilangan negatif bukan prima
+  if (n == 2)
+    return 1; // 2 adalah prima
+  if (n % i == 0)
+    return 0; // Habis dibagi angka lain -> bukan prima
+  if (i * i > n)
+    return 1; // Sudah melewati batas akar kuadrat -> pasti prima
+
+  return cekPrimaRekursi(n, i + 1);
 }

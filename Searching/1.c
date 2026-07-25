@@ -55,6 +55,7 @@ int main() {
 }
 
 int sequent(int arr[], int n, int key) {
+  // searching versi brute force
   int comp = 0;
   for (int i = 0; i < n; i++) {
     comp++;
@@ -68,7 +69,7 @@ int binary(int arr[], int n, int key) {
   int low = 0;
   int high = n - 1;
   int comp = 0;
-  while (low <= high) {
+  while (low <= high) { // jikalau searching memiliki range yang jelas
     int mid = low + (high - low) / 2;
 
     comp++;

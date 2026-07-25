@@ -36,7 +36,8 @@ int main() {
   case 3:
     printf("masukkan kata : ");
     fgets(ch, 64, stdin);
-    ch[strcspn(ch, "\n")] = '\0'; // menghapus endline ('\n')
+    ch[strcspn(ch, "\n")] = '\0'; // menghapus endline ('\n') karena endline
+                                  // dianggap sebuah char aktif
     printf("hasil : ");
     soal3(ch, strlen(ch));
     break;
@@ -45,7 +46,7 @@ int main() {
 
 void soal1(int x) {
   if (x <= 0)
-    exit(0);
+    return;
   printf("nilai ke - %d\n", x);
   soal1(x - 1);
 }
@@ -54,16 +55,16 @@ void soal2(int x) {
   static int i = 0;
 
   if (x <= 0)
-    exit(0);
+    return;
   printf("nilai ke - %d\n", ++i);
   soal2(x - 1);
 }
 
-void soal3(char temp[], int len) {
+void soal3(char temp[], int len /* panjang string */) {
   if (len < 0) {
     printf("\n");
-    exit(0);
+    return;
   }
-  printf("%c", temp[len--]);
+  printf("%c", temp[len--]); // print per-char
   soal3(temp, len);
 }
