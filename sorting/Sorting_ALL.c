@@ -93,14 +93,15 @@ void tukar(int *a, int *b) {
   *b = temp;
 }
 
-void insertion(int arr[], int n, int mode) {
-  int key, kondisi;
+void insertion(int arr[], int n, int urut) {
+  int key;
   for (int i = 1; i < n; i++) {
 
     key = arr[i];
+    // ambil array pertama yang belum di sorting
     int j = i - 1;
 
-    if (mode == 2) {
+    if (urut == 2) {
       while (j >= 0 && arr[j] < key) {
         arr[j + 1] = arr[j];
         j--;
@@ -116,13 +117,13 @@ void insertion(int arr[], int n, int mode) {
   }
 }
 
-void selection(int arr[], int n, int mode) {
-  int min, temp;
+void selection(int arr[], int n, int urut) {
+  int min;
   for (int i = 0; i < n; i++) {
     min = i;
     int j = i + 1;
 
-    if (mode == 2) {
+    if (urut == 2) {
       while (j < n) {
         if (arr[j] > arr[min])
           min = j;
@@ -140,12 +141,12 @@ void selection(int arr[], int n, int mode) {
   }
 }
 
-void bubble(int arr[], int n, int mode) {
+void bubble(int arr[], int n, int urut) {
   int isSwap = 1, i = 0;
   while (i < n && isSwap) {
     isSwap = 0;
     for (int j = 0; j < n - i - 1; j++) {
-      if (mode == 1) {
+      if (urut == 1) {
         if (arr[j] > arr[j + 1]) {
           tukar(&arr[j], &arr[j + 1]);
           isSwap = 1;
@@ -163,13 +164,13 @@ void bubble(int arr[], int n, int mode) {
   }
 }
 
-void shell(int arr[], int n, int mode) {
+void shell(int arr[], int n, int urut) {
   for (int gap = n / 2; gap > 0; gap /= 2) {
     for (int i = gap; i < n; i++) {
       int temp = arr[i];
       int j;
 
-      if (mode == 1) {
+      if (urut == 1) {
         for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
           arr[j] = arr[j - gap];
         }
@@ -183,15 +184,18 @@ void shell(int arr[], int n, int mode) {
   }
 }
 
-void merge(int arr[], int res[], int low, int high, int mode) {
+// merge function pertama untuk melakukan partisi
+void merge(int arr[], int res[], int low, int high, int urut) {
   if (low < high) {
     int medium = (low + high) / 2;
-    merge(arr, res, low, medium, mode);
-    merge(arr, res, medium + 1, high, mode);
-    merging(arr, res, low, medium, high, mode);
+    merge(arr, res, low, medium, urut);
+    merge(arr, res, medium + 1, high, urut);
+    merging(arr, res, low, medium, high, urut);
   }
 }
-void merging(int arr[], int res[], int low, int medium, int high, int mode) {
+
+// merge function kedua untuk memproses tiap partisinya
+void merging(int arr[], int res[], int low, int medium, int high, int urut) {
   int L1 = low;
   int R1 = medium;
   int L2 = medium + 1;
@@ -227,14 +231,18 @@ void merging(int arr[], int res[], int low, int medium, int high, int mode) {
     j++;
   }
 }
-void quick(int arr[], int low, int high, int mode) {
+
+// function quick sort pertama untuk partisi
+void quick(int arr[], int low, int high, int urut) {
   if (low < high) {
     int pi = partition(arr, low, high);
 
-    quick(arr, low, pi - 1, mode);
-    quick(arr, pi + 1, high, mode);
+    quick(arr, low, pi - 1, urut);
+    quick(arr, pi + 1, high, urut);
   }
 }
+
+// partition for quick sort
 int partition(int Data[], int low, int high) {
   int pivot = Data[high];
   int i = (low - 1);
