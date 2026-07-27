@@ -1,3 +1,8 @@
+# **Disclaimer**
+
+kode-kode berikut berjalan di OS Linux fedora 43 dengan versi gcc (GCC) 15.2.1 20260123 (Red Hat 15.2.1-7).
+jadi masih memungkinkan untuk di beberapa OS tidak mendukung ataupun versi dari gcc yang tidak sama dengan syntax yang berbeda tiap versinya
+
 # ASD Semester 2
 
 Repository ini berisi kumpulan materi, latihan, dan implementasi program dari mata kuliah **Algoritma dan Struktur Data (ASD) Semester 2** menggunakan bahasa pemrograman **C**.
